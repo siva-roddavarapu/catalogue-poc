@@ -1,6 +1,6 @@
 # DECISIONS
 
-> Status: **Phase 2 (AC slices in progress: AC4, AC1, AC2 done).** The assumptions log is live. Sections marked _TODO (Phase 4)_ get written at the end.
+> Status: **Phase 2 (AC slices in progress: AC4, AC1, AC2, AC3 done).** The assumptions log is live. Sections marked _TODO (Phase 4)_ get written at the end.
 
 ## Stack choice and why
 
@@ -56,7 +56,7 @@ _TODO (Phase 4)._
 
 ## Next day of work
 
-_TODO (Phase 4)._ So far: honeypot (S6), retry with backoff (S3), compiled API build (S7).
+_TODO (Phase 4)._ So far: honeypot (S6); retry with backoff (S3), since during AC3 verification the first cold call to Fake Store hit the 5 s timeout and returned the designed 502, which one retry would have hidden; compiled API build (S7).
 
 ## Open questions
 

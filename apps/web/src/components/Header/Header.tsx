@@ -1,11 +1,14 @@
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useSearchParams } from 'react-router';
 import { apiClient } from '../../api/client';
 import { useApi } from '../../hooks/useApi';
+import { SearchBar } from '../SearchBar/SearchBar';
 import styles from './Header.module.css';
 
-/** Shown on every page: brand, category links (AC2). The search bar (AC3) is added in its slice. */
+/** Shown on every page: brand, category links (AC2) and the search bar (AC3). */
 export function Header() {
   const categories = useApi('categories', apiClient.getCategories);
+  const [searchParams] = useSearchParams();
+  const currentTerm = searchParams.get('q') ?? '';
 
   return (
     <header className={styles.header}>
@@ -37,6 +40,8 @@ export function Header() {
             </ul>
           )}
         </nav>
+        {/* Keyed on the URL term so the box shows what was searched, including after Back. */}
+        <SearchBar key={currentTerm} initialTerm={currentTerm} />
       </div>
     </header>
   );

@@ -32,3 +32,23 @@ describe('CatalogueService.getCategoryProducts (AC2)', () => {
     );
   });
 });
+
+describe('CatalogueService.search (AC3)', () => {
+  const searchIds = async (term: string) =>
+    (await buildTestCatalogue().search(term)).map((p) => p.id);
+
+  it('is case-insensitive and matches title or description', async () => {
+    // 1 has "Backpack" in its title; 6 has "backpack" in its description.
+    expect(await searchIds('BACKPACK')).toEqual([1, 6]);
+  });
+
+  it('matches the category name', async () => {
+    expect(await searchIds('jewel')).toEqual([4, 5]);
+    expect(await searchIds("men's")).toEqual([1, 2, 3]);
+  });
+
+  it('returns only matching products, or none', async () => {
+    expect(await searchIds('drive')).toEqual([6, 8]);
+    expect(await searchIds('zzz-no-such-thing')).toEqual([]);
+  });
+});

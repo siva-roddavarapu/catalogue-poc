@@ -30,3 +30,14 @@ export interface CategoryProducts {
   topRated: Product[];
   others: Product[];
 }
+
+export const SEARCH_MAX_LENGTH = 100;
+
+/** AC3: the search term is trimmed; empty/whitespace is rejected; max 100 characters. */
+export const searchQuerySchema = z.object({
+  q: z
+    .string()
+    .trim()
+    .min(1, 'Enter a search term')
+    .max(SEARCH_MAX_LENGTH, `Search terms can be at most ${SEARCH_MAX_LENGTH} characters`),
+});

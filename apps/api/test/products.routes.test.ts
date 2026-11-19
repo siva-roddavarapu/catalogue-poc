@@ -9,6 +9,28 @@ describe('GET /api/products/featured (AC1)', () => {
   });
 });
 
+describe('GET /api/products/search (AC3)', () => {
+  const search = (query: string) =>
+    buildTestApp().inject({ method: 'GET', url: `/api/products/search?${query}` });
+
+  it('returns only products matching the trimmed term', async () => {
+    const res = await search('q=%20%20Drive%20');
+    expect(res.statusCode).toBe(200);
+    expect(res.json().map((p: { id: number }) => p.id)).toEqual([6, 8]);
+  });
+
+  it.each([
+    ['missing', ''],
+    ['empty', 'q='],
+    ['whitespace only', 'q=%20%20%20'],
+    ['over 100 characters', `q=${'a'.repeat(101)}`],
+  ])('rejects a %s term with 400', async (_case, query) => {
+    const res = await search(query);
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error.code).toBe('VALIDATION_ERROR');
+  });
+});
+
 describe('GET /api/products/:id (AC4)', () => {
   it('returns the product with the configured currency', async () => {
     const res = await buildTestApp().inject({ method: 'GET', url: '/api/products/4' });

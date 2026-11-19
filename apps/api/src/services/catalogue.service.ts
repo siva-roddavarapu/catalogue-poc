@@ -54,6 +54,23 @@ export class CatalogueService {
     };
   }
 
+  /**
+   * AC3: case-insensitive substring match on title, description and category name.
+   * Runs over the (cached) product list because the source has no search endpoint.
+   * Expects an already trimmed, non-empty term (validated at the HTTP edge).
+   */
+  async search(term: string): Promise<Product[]> {
+    const needle = term.toLowerCase();
+    const products = await this.deps.source.listProducts();
+    return products
+      .filter((product) =>
+        [product.title, product.description, product.category.name].some((text) =>
+          text.toLowerCase().includes(needle),
+        ),
+      )
+      .map((product) => this.toProduct(product));
+  }
+
   async getProduct(id: number): Promise<Product> {
     const product = await this.deps.source.getProduct(id);
     if (!product) throw new NotFoundError(`Product ${id} not found`);

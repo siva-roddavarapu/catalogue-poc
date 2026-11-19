@@ -32,7 +32,7 @@ The full spec is `docs/SPEC.md`. It wins over anything here. This file is the sh
 ## Code conventions
 
 - TypeScript `strict: true` everywhere. ESLint + Prettier.
-- Tests required per slice. API tests use Vitest + Fastify `inject` with in-memory/fixture adapters and the 8 products in `apps/api/test/helpers/testProducts.ts` — **tests never hit the network**. Web tests use Vitest + React Testing Library + MSW.
+- Tests required per slice. API tests use Vitest + Fastify `inject` with in-memory/fixture adapters and the 8 products in `apps/api/test/helpers/testProducts.ts` — **tests never hit the network**. Web tests use Vitest + React Testing Library, mocking `src/api/client.ts` with `vi.mock` (owner-approved simplification S1 in `DECISIONS.md`, replacing MSW).
 - **Windows-safe npm scripts:** must run in PowerShell/cmd and bash. No `export`, no `rm -rf`, no `&&`-chained shell tricks, no inline `VAR=x cmd`. Use node scripts or cross-platform tools.
 - Conventional commits: `feat(ac4): …`, `fix(api): …`, `test(web): …`, `docs: …`, `chore: …`.
 - Explain any non-obvious choice in one or two sentences, in code comments or `DECISIONS.md`.

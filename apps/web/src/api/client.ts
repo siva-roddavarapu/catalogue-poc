@@ -55,4 +55,6 @@ export const apiClient = {
     request<CategoryProducts>(`/categories/${encodeURIComponent(slug)}/products`),
   getFeatured: () => request<Product[]>('/products/featured'),
   getProduct: (id: number) => request<Product>(`/products/${id}`),
+  searchProducts: (term: string) =>
+    request<Product[]>(`/products/search?${new URLSearchParams({ q: term }).toString()}`),
 };

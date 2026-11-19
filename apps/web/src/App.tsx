@@ -4,6 +4,7 @@ import { CategoryPage } from './modules/category/CategoryPage';
 import { HomePage } from './modules/home/HomePage';
 import { NotFoundPage } from './modules/not-found/NotFoundPage';
 import { ProductPage } from './modules/product/ProductPage';
+import { SearchPage } from './modules/search/SearchPage';
 
 function Layout() {
   return (
@@ -23,6 +24,7 @@ export function App() {
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="category/:slug" element={<CategoryPage />} />
+        <Route path="search" element={<SearchPage />} />
         <Route path="product/:id" element={<ProductPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>

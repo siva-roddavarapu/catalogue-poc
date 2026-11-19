@@ -1,6 +1,6 @@
 import type { FastifyPluginAsync } from 'fastify';
 import { z } from 'zod';
-import { productIdSchema, type Product } from '@catalogue/shared';
+import { productIdSchema, searchQuerySchema, type Product } from '@catalogue/shared';
 import type { CatalogueService } from '../services/catalogue.service';
 
 const productParams = z.object({ id: productIdSchema });
@@ -11,6 +11,11 @@ export const productsRoutes: FastifyPluginAsync<{ catalogue: CatalogueService }>
   { catalogue },
 ) => {
   app.get('/products/featured', async (): Promise<Product[]> => catalogue.getFeatured());
+
+  app.get('/products/search', async (request): Promise<Product[]> => {
+    const { q } = searchQuerySchema.parse(request.query);
+    return catalogue.search(q);
+  });
 
   // Declared after the static routes above for readability (Fastify gives static paths priority anyway).
   app.get('/products/:id', async (request): Promise<Product> => {
