@@ -27,3 +27,11 @@ export class UpstreamError extends AppError {
     this.cause = cause;
   }
 }
+
+/** The email provider failed. The user can retry; their input is kept by the UI. */
+export class EmailDeliveryError extends AppError {
+  constructor(cause: unknown) {
+    super(502, 'UPSTREAM_ERROR', "We couldn't send your enquiry right now. Please try again.");
+    this.cause = cause;
+  }
+}

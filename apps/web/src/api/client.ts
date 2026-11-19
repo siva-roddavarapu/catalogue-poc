@@ -2,6 +2,8 @@ import type {
   ApiErrorBody,
   Category,
   CategoryProducts,
+  EnquiryAccepted,
+  EnquiryRequest,
   HealthResponse,
   Product,
 } from '@catalogue/shared';
@@ -55,6 +57,8 @@ export const apiClient = {
     request<CategoryProducts>(`/categories/${encodeURIComponent(slug)}/products`),
   getFeatured: () => request<Product[]>('/products/featured'),
   getProduct: (id: number) => request<Product>(`/products/${id}`),
+  submitEnquiry: (enquiry: EnquiryRequest) =>
+    request<EnquiryAccepted>('/enquiries', { method: 'POST', body: JSON.stringify(enquiry) }),
   searchProducts: (term: string) =>
     request<Product[]>(`/products/search?${new URLSearchParams({ q: term }).toString()}`),
 };

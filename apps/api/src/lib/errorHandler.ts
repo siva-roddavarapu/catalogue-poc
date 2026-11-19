@@ -31,6 +31,15 @@ export function errorHandler(error: FastifyError, request: FastifyRequest, reply
     return send(reply, 400, 'VALIDATION_ERROR', 'Invalid request', z.flattenError(error));
   }
 
+  if (error.statusCode === 429) {
+    return send(
+      reply,
+      429,
+      'RATE_LIMITED',
+      'Too many requests. Please wait a minute and try again.',
+    );
+  }
+
   // Fastify's own 4xx errors (malformed JSON, body too large, ...) have safe messages.
   if (error.statusCode && error.statusCode >= 400 && error.statusCode < 500) {
     return send(reply, error.statusCode, 'VALIDATION_ERROR', error.message);

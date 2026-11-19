@@ -6,7 +6,9 @@ import type { ProductSource } from './ports/ProductSource';
 import { FakeStoreProductSource } from './adapters/products/FakeStoreProductSource';
 import { FixtureProductSource } from './adapters/products/FixtureProductSource';
 import { JsonFileMerchandising } from './adapters/merchandising/JsonFileMerchandising';
+import { SmtpEmailSender } from './adapters/email/SmtpEmailSender';
 import { CatalogueService } from './services/catalogue.service';
+import { EnquiryService } from './services/enquiry.service';
 
 // apps/api/src -> repo root. Same depth in the Docker image (/app/apps/api/src -> /app).
 const MERCHANDISING_FILE = path.resolve(import.meta.dirname, '../../../config/merchandising.json');
@@ -29,9 +31,24 @@ export function createContainer(config: Config): AppDeps {
 
   const merchandising = JsonFileMerchandising.fromFile(MERCHANDISING_FILE);
 
+  const catalogue = new CatalogueService({
+    source,
+    merchandising,
+    currency: config.CURRENCY,
+    logger,
+  });
+
   return {
     config,
     logger,
-    catalogue: new CatalogueService({ source, merchandising, currency: config.CURRENCY, logger }),
+    catalogue,
+    enquiries: new EnquiryService({
+      catalogue,
+      email: new SmtpEmailSender({ host: config.SMTP_HOST, port: config.SMTP_PORT }),
+      salesInbox: config.SALES_INBOX,
+      from: config.SMTP_FROM,
+      webOrigin: config.WEB_ORIGIN,
+      logger,
+    }),
   };
 }
