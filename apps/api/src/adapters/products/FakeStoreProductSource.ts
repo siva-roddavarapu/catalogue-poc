@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import type { ProductSource, SourceProduct } from '../../ports/ProductSource';
 import { UpstreamError } from '../../lib/errors';
-import { toCategoryName, toCategorySlug } from './categorySlug';
+import type { Category } from '@catalogue/shared';
+import { toCategoryName, toCategorySlug, uniqueCategories } from './categorySlug';
 
 /**
  * The ONLY file that knows Fake Store (https://fakestoreapi.com) exists.
@@ -56,6 +57,11 @@ export class FakeStoreProductSource implements ProductSource {
   async getProduct(id: number): Promise<SourceProduct | null> {
     const products = await this.listProducts();
     return products.find((product) => product.id === id) ?? null;
+  }
+
+  // Derived from the cached list: no extra request, and slugs always match the products' slugs.
+  async listCategories(): Promise<Category[]> {
+    return uniqueCategories(await this.listProducts());
   }
 
   private async fetchProducts(): Promise<SourceProduct[]> {

@@ -23,7 +23,9 @@ export const testConfig: Config = {
 /** Curation for the 8 test products. Deliberately not in ID order, so ordering is tested. */
 export const testMerchandising = {
   homeFeatured: [7, 1, 4, 6, 2],
-  categoryFeatured: {},
+  // Electronics includes 4 (a jewelery item) to prove off-category IDs are skipped.
+  // Jewelery is deliberately not curated.
+  categoryFeatured: { 'mens-clothing': [3, 1], electronics: [8, 4, 6] },
 };
 
 export function buildTestCatalogue(

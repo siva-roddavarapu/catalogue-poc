@@ -40,4 +40,8 @@ export class JsonFileMerchandising implements MerchandisingProvider {
   async getHomeFeatured(): Promise<number[]> {
     return this.data.homeFeatured;
   }
+
+  async getCategoryFeatured(categorySlug: string): Promise<number[]> {
+    return this.data.categoryFeatured[categorySlug] ?? [];
+  }
 }

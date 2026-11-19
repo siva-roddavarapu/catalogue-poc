@@ -2,6 +2,7 @@ import Fastify, { type FastifyBaseLogger, type FastifyInstance } from 'fastify';
 import type { ApiErrorBody } from '@catalogue/shared';
 import type { Config } from './config';
 import { errorHandler } from './lib/errorHandler';
+import { categoriesRoutes } from './routes/categories.routes';
 import { healthRoutes } from './routes/health.routes';
 import { productsRoutes } from './routes/products.routes';
 import type { CatalogueService } from './services/catalogue.service';
@@ -25,6 +26,7 @@ export function buildApp(deps: AppDeps): FastifyInstance {
 
   app.register(healthRoutes, { prefix: '/api' });
   app.register(productsRoutes, { prefix: '/api', catalogue: deps.catalogue });
+  app.register(categoriesRoutes, { prefix: '/api', catalogue: deps.catalogue });
 
   return app;
 }

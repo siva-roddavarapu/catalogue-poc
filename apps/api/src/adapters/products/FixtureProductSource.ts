@@ -1,4 +1,6 @@
+import type { Category } from '@catalogue/shared';
 import type { ProductSource, SourceProduct } from '../../ports/ProductSource';
+import { uniqueCategories } from './categorySlug';
 import snapshot from '../../fixtures/products.json' with { type: 'json' };
 
 /**
@@ -18,5 +20,9 @@ export class FixtureProductSource implements ProductSource {
 
   async getProduct(id: number): Promise<SourceProduct | null> {
     return this.products.find((product) => product.id === id) ?? null;
+  }
+
+  async listCategories(): Promise<Category[]> {
+    return uniqueCategories(this.products);
   }
 }

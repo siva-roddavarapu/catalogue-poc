@@ -19,3 +19,28 @@
   color: var(--color-text);
   text-decoration: none;
 }
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.categoryLink {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.categoryLink:hover,
+.active {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.muted {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}

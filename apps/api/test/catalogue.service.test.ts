@@ -21,3 +21,14 @@ describe('CatalogueService.getFeatured (AC1)', () => {
     expect(warn).toHaveBeenCalledWith({ placement: 'home', missing: [99] }, expect.any(String));
   });
 });
+
+describe('CatalogueService.getCategoryProducts (AC2)', () => {
+  it('logs curated IDs that are not in the category', async () => {
+    const warn = vi.fn();
+    await buildTestCatalogue({ logger: { warn } }).getCategoryProducts('electronics');
+    expect(warn).toHaveBeenCalledWith(
+      { placement: 'category:electronics', missing: [4] },
+      expect.any(String),
+    );
+  });
+});
