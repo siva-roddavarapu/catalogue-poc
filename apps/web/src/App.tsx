@@ -2,6 +2,7 @@ import { Outlet, Route, Routes } from 'react-router';
 import { Header } from './components/Header/Header';
 import { HomePage } from './modules/home/HomePage';
 import { NotFoundPage } from './modules/not-found/NotFoundPage';
+import { ProductPage } from './modules/product/ProductPage';
 
 function Layout() {
   return (
@@ -20,6 +21,7 @@ export function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
+        <Route path="product/:id" element={<ProductPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

@@ -1,4 +1,4 @@
-import type { ApiErrorBody, HealthResponse } from '@catalogue/shared';
+import type { ApiErrorBody, HealthResponse, Product } from '@catalogue/shared';
 
 /** Thrown for any failed API call, carrying the server's error code when there is one. */
 export class ApiClientError extends Error {
@@ -44,4 +44,5 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 export const apiClient = {
   health: () => request<HealthResponse>('/health'),
+  getProduct: (id: number) => request<Product>(`/products/${id}`),
 };

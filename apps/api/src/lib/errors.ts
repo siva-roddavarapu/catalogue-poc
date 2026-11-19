@@ -19,3 +19,11 @@ export class NotFoundError extends AppError {
     super(404, 'NOT_FOUND', message);
   }
 }
+
+/** The product data source failed. The cause is logged; the client gets a safe message. */
+export class UpstreamError extends AppError {
+  constructor(cause: unknown) {
+    super(502, 'UPSTREAM_ERROR', 'The product catalogue is temporarily unavailable.');
+    this.cause = cause;
+  }
+}

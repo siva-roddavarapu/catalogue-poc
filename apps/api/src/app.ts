@@ -3,10 +3,13 @@ import type { ApiErrorBody } from '@catalogue/shared';
 import type { Config } from './config';
 import { errorHandler } from './lib/errorHandler';
 import { healthRoutes } from './routes/health.routes';
+import { productsRoutes } from './routes/products.routes';
+import type { CatalogueService } from './services/catalogue.service';
 
 /** Everything the HTTP layer needs. Built by container.ts (real) or buildTestApp (tests). */
 export interface AppDeps {
   config: Config;
+  catalogue: CatalogueService;
 }
 
 export function buildApp(deps: AppDeps, options: { logger?: boolean } = {}): FastifyInstance {
@@ -19,6 +22,7 @@ export function buildApp(deps: AppDeps, options: { logger?: boolean } = {}): Fas
   });
 
   app.register(healthRoutes, { prefix: '/api' });
+  app.register(productsRoutes, { prefix: '/api', catalogue: deps.catalogue });
 
   return app;
 }

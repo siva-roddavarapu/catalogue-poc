@@ -1,5 +1,8 @@
 import { buildApp } from '../../src/app';
 import type { Config } from '../../src/config';
+import { FixtureProductSource } from '../../src/adapters/products/FixtureProductSource';
+import { CatalogueService } from '../../src/services/catalogue.service';
+import { testProducts } from './testProducts';
 
 export const testConfig: Config = {
   PORT: 3000,
@@ -14,7 +17,11 @@ export const testConfig: Config = {
   SALES_INBOX: 'sales@example.com',
 };
 
-/** Builds the real Fastify app wired to in-memory/test adapters. No network. */
+/** Builds the real Fastify app wired to in-memory adapters and the 8 test products. No network. */
 export function buildTestApp() {
-  return buildApp({ config: testConfig }, { logger: false });
+  const catalogue = new CatalogueService(
+    new FixtureProductSource(testProducts),
+    testConfig.CURRENCY,
+  );
+  return buildApp({ config: testConfig, catalogue }, { logger: false });
 }
