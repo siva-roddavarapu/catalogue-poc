@@ -1,4 +1,5 @@
 import Fastify, { type FastifyBaseLogger, type FastifyInstance } from 'fastify';
+import helmet from '@fastify/helmet';
 import rateLimit from '@fastify/rate-limit';
 import type { ApiErrorBody } from '@catalogue/shared';
 import type { Config } from './config';
@@ -36,6 +37,8 @@ export function buildApp(deps: AppDeps): FastifyInstance {
     return reply.status(404).send(body);
   });
 
+  // Standard security headers (nosniff, frameguard, HSTS, a CSP, …) on every API response.
+  app.register(helmet);
   // global: false = only routes that opt in (POST /api/enquiries) are rate limited.
   app.register(rateLimit, { global: false });
   app.register(healthRoutes, { prefix: '/api' });

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@catalogue/shared": "*",
+    "@fastify/helmet": "^13.2.0",
     "@fastify/rate-limit": "^11.2.2",
     "fastify": "^5.12.8",
     "nodemailer": "^10.6.0",
