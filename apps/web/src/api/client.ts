@@ -4,7 +4,6 @@ import type {
   CategoryProducts,
   EnquiryAccepted,
   EnquiryRequest,
-  HealthResponse,
   Product,
 } from '@catalogue/shared';
 
@@ -51,7 +50,6 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 }
 
 export const apiClient = {
-  health: () => request<HealthResponse>('/health'),
   getCategories: () => request<Category[]>('/categories'),
   getCategoryProducts: (slug: string) =>
     request<CategoryProducts>(`/categories/${encodeURIComponent(slug)}/products`),

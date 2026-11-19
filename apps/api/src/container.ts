@@ -21,6 +21,8 @@ const MERCHANDISING_FILE = path.resolve(import.meta.dirname, '../../../config/me
 export function createContainer(config: Config): AppDeps {
   const logger = pino();
 
+  // `!config.FAKESTORE_BASE_URL` never triggers (config.ts requires the URL when
+  // PRODUCT_SOURCE=fakestore); it only narrows the type to string for TypeScript.
   const source: ProductSource =
     config.PRODUCT_SOURCE === 'fixture' || !config.FAKESTORE_BASE_URL
       ? new FixtureProductSource()
