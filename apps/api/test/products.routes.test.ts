@@ -1,6 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { buildTestApp } from './helpers/buildTestApp';
 
+describe('GET /api/products/featured (AC1)', () => {
+  it('returns the 5 curated home products in order', async () => {
+    const res = await buildTestApp().inject({ method: 'GET', url: '/api/products/featured' });
+    expect(res.statusCode).toBe(200);
+    expect(res.json().map((p: { id: number }) => p.id)).toEqual([7, 1, 4, 6, 2]);
+  });
+});
+
 describe('GET /api/products/:id (AC4)', () => {
   it('returns the product with the configured currency', async () => {
     const res = await buildTestApp().inject({ method: 'GET', url: '/api/products/4' });

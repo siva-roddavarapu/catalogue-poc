@@ -1,6 +1,6 @@
 # DECISIONS
 
-> Status: **Phase 2 (AC slices in progress: AC4 done).** The assumptions log is live. Sections marked _TODO (Phase 4)_ get written at the end.
+> Status: **Phase 2 (AC slices in progress: AC4, AC1 done).** The assumptions log is live. Sections marked _TODO (Phase 4)_ get written at the end.
 
 ## Stack choice and why
 

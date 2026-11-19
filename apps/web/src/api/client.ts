@@ -44,5 +44,6 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 export const apiClient = {
   health: () => request<HealthResponse>('/health'),
+  getFeatured: () => request<Product[]>('/products/featured'),
   getProduct: (id: number) => request<Product>(`/products/${id}`),
 };

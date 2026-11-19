@@ -10,6 +10,9 @@ export const productsRoutes: FastifyPluginAsync<{ catalogue: CatalogueService }>
   app,
   { catalogue },
 ) => {
+  app.get('/products/featured', async (): Promise<Product[]> => catalogue.getFeatured());
+
+  // Declared after the static routes above for readability (Fastify gives static paths priority anyway).
   app.get('/products/:id', async (request): Promise<Product> => {
     const { id } = productParams.parse(request.params);
     return catalogue.getProduct(id);

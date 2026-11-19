@@ -13,6 +13,7 @@
   "dependencies": {
     "@catalogue/shared": "*",
     "fastify": "^5.12.8",
+    "pino": "^10.4.0",
     "tsx": "^4.23.15",
     "zod": "^4.6.7"
   },

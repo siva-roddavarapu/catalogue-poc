@@ -1,6 +1,6 @@
 import { existsSync } from 'node:fs';
 import path from 'node:path';
-import { buildApp } from './app';
+import { buildApp, type AppDeps } from './app';
 import { ConfigError, loadConfig } from './config';
 import { createContainer } from './container';
 
@@ -8,9 +8,10 @@ import { createContainer } from './container';
 const envFile = path.resolve(import.meta.dirname, '../../../.env');
 if (existsSync(envFile)) process.loadEnvFile(envFile);
 
-let config;
+// Fail fast: bad env or a bad merchandising file stops the process with a readable message.
+let deps: AppDeps;
 try {
-  config = loadConfig();
+  deps = createContainer(loadConfig());
 } catch (error) {
   if (error instanceof ConfigError) {
     console.error(error.message);
@@ -19,7 +20,7 @@ try {
   throw error;
 }
 
-const app = buildApp(createContainer(config));
+const app = buildApp(deps);
 
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   process.once(signal, () => {
@@ -27,4 +28,4 @@ for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   });
 }
 
-await app.listen({ port: config.PORT, host: '0.0.0.0' });
+await app.listen({ port: deps.config.PORT, host: '0.0.0.0' });

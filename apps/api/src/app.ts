@@ -1,4 +1,4 @@
-import Fastify, { type FastifyInstance } from 'fastify';
+import Fastify, { type FastifyBaseLogger, type FastifyInstance } from 'fastify';
 import type { ApiErrorBody } from '@catalogue/shared';
 import type { Config } from './config';
 import { errorHandler } from './lib/errorHandler';
@@ -9,11 +9,13 @@ import type { CatalogueService } from './services/catalogue.service';
 /** Everything the HTTP layer needs. Built by container.ts (real) or buildTestApp (tests). */
 export interface AppDeps {
   config: Config;
+  /** One logger shared by Fastify and the services. */
+  logger: FastifyBaseLogger;
   catalogue: CatalogueService;
 }
 
-export function buildApp(deps: AppDeps, options: { logger?: boolean } = {}): FastifyInstance {
-  const app = Fastify({ logger: options.logger ?? true });
+export function buildApp(deps: AppDeps): FastifyInstance {
+  const app = Fastify({ loggerInstance: deps.logger });
 
   app.setErrorHandler(errorHandler);
   app.setNotFoundHandler((request, reply) => {
