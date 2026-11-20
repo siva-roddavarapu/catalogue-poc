@@ -1,9 +1,0 @@
-{
-  "homeFeatured": [1, 5, 9, 14, 18],
-  "categoryFeatured": {
-    "mens-clothing": [1, 2],
-    "jewelery": [5, 6],
-    "electronics": [9, 10],
-    "womens-clothing": [15, 16]
-  }
-}

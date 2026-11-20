@@ -1,6 +1,0 @@
-node_modules
-dist
-coverage
-package-lock.json
-apps/api/src/fixtures/products.json
-docs/SPEC.md
