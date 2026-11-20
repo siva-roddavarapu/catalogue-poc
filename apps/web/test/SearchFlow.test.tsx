@@ -63,6 +63,18 @@ describe('Search (AC3)', () => {
     expect(within(main).queryByText('Backpack')).not.toBeInTheDocument();
   });
 
+  it('keeps the cursor in the box after searching, so Backspace still edits it', async () => {
+    api.searchProducts.mockResolvedValue([]);
+    renderApp('/');
+    const box = screen.getByRole('searchbox', { name: 'Search products' });
+    await userEvent.type(box, 'ssd{Enter}');
+    await screen.findByText(/No products match .ssd./);
+
+    expect(screen.getByRole('searchbox', { name: 'Search products' })).toHaveFocus();
+    await userEvent.keyboard('{Backspace}{Backspace}{Backspace}');
+    expect(await screen.findByRole('heading', { name: 'Featured products' })).toBeInTheDocument();
+  });
+
   it('pressing Enter also searches', async () => {
     api.searchProducts.mockResolvedValue([]);
     renderApp('/');
@@ -76,6 +88,27 @@ describe('Search (AC3)', () => {
     expect(button).toBeDisabled();
     await userEvent.type(screen.getByRole('searchbox', { name: 'Search products' }), '   ');
     expect(button).toBeDisabled();
+    expect(api.searchProducts).not.toHaveBeenCalled();
+  });
+
+  it('clearing the box on the results page goes back to the home page', async () => {
+    api.searchProducts.mockResolvedValue([product(9, 'Portable Hard Drive')]);
+    renderApp('/search?q=drive');
+    expect(await screen.findByText('Portable Hard Drive')).toBeInTheDocument();
+
+    await userEvent.clear(screen.getByRole('searchbox', { name: 'Search products' }));
+
+    expect(await screen.findByRole('heading', { name: 'Featured products' })).toBeInTheDocument();
+    expect(screen.queryByText('Portable Hard Drive')).not.toBeInTheDocument();
+    expect(screen.getByRole('searchbox', { name: 'Search products' })).toHaveValue('');
+  });
+
+  it('clearing the box on other pages does not navigate', async () => {
+    renderApp('/');
+    const box = screen.getByRole('searchbox', { name: 'Search products' });
+    await userEvent.type(box, 'abc');
+    await userEvent.clear(box);
+    expect(screen.getByRole('heading', { name: 'Featured products' })).toBeInTheDocument();
     expect(api.searchProducts).not.toHaveBeenCalled();
   });
 

@@ -40,8 +40,7 @@ export function Header() {
             </ul>
           )}
         </nav>
-        {/* Keyed on the URL term so the box shows what was searched, including after Back. */}
-        <SearchBar key={currentTerm} initialTerm={currentTerm} />
+        <SearchBar initialTerm={currentTerm} />
       </div>
     </header>
   );
