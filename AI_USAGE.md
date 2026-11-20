@@ -57,10 +57,16 @@ Real incidents only, logged as they happened.
 | 11  | Its own code and docs had six problems that tests didn't catch. (a) The Vite dev proxy hard-coded port 3000 although `PORT` is configurable. (b) `apiClient.health` was dead code. (c) A line in `container.ts` looked like a silent fallback to fixture data. (d)–(f) DECISIONS.md rows A4, A5 and A9 described the code inaccurately. | The Phase 4 self-review: re-reading the diff as the reviewer, plus greps for dead client functions and banned references.                                                                                                 | (a) Proxy reads `PORT` from the root `.env`, verified with `PORT=3100`. (b) Removed. (c) Comment explains it only narrows the type. (d)–(f) Rows corrected. |
 | 12  | Search had two bugs that every test missed. (a) Clearing the box on the results page left the old results on screen, and Enter did nothing. (b) After a search the cursor left the box, because the header remounted the input (`key={currentTerm}`), so Backspace did nothing.                                                         | **The human, testing locally**: "clearing is not working". The AI reproduced it in a browser before changing anything, found (b) while checking its own fix, and asked the human how clearing should behave (a spec gap). | Clearing on the results page goes home (DECISIONS A21). The input now follows the URL without remounting. Three new UI tests, re-checked in a browser.      |
 
-_TODO(human): add any incidents you caught in your own review that aren't listed here._
+Incident 12 was found by the owner while testing locally on Windows; the automated tests had passed.
 
 **Pattern worth noting:** most incidents were caught by _running_ things (typecheck, tests, `docker build`, a probe script), not by reading. That's why the workflow insists on pasted output.
 
 ## Time spent
 
-_TODO(human): actual figures._ Planning: \_\_ · Building: \_\_ · Testing: \_\_ · Reviewing: \_\_
+**About 3 h 30 in total**, over the 2–3 h time-box.
+
+| Planning | Building | Testing | Reviewing |
+| -------- | -------- | ------- | --------- |
+| 30 min   | 1 h 45   | 30 min  | 45 min    |
+
+Building includes setting up the dedicated GitHub repo and account access.

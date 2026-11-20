@@ -248,8 +248,8 @@ packages/shared/src product, enquiry and error types + Zod schemas used by both 
 
 ## 10. Tested with
 
-| Environment                    | Versions                                                   | Run mode                                   |
-| ------------------------------ | ---------------------------------------------------------- | ------------------------------------------ |
-| Linux (development container)  | Node 22.23.5 · npm 10.9.9 · Docker 29.10.0, Compose v5.7.1 | Docker Compose and `npm run dev`           |
-| GitHub Actions `ubuntu-latest` | Node 22                                                    | CI: lint, typecheck, tests, compose build  |
-| Windows                        | TODO(human): `node -v` / `npm -v`                          | `npm run dev` + Mailpit binary (no Docker) |
+| Environment                    | Versions                                                   | Run mode                                  |
+| ------------------------------ | ---------------------------------------------------------- | ----------------------------------------- |
+| Linux (development container)  | Node 22.23.5 · npm 10.9.9 · Docker 29.10.0, Compose v5.7.1 | Docker Compose and `npm run dev`          |
+| GitHub Actions `ubuntu-latest` | Node 22                                                    | CI: lint, typecheck, tests, compose build |
+| Windows (owner's machine)      | Node + npm (Git Bash), no Docker                           | `npm run dev` (no Docker)                 |
