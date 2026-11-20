@@ -1,0 +1,31 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.tile:hover {
+  border-color: var(--color-primary);
+}
+
+.image {
+  height: 160px;
+  object-fit: contain;
+  align-self: center;
+}
+
+.title {
+  font-size: var(--font-size-sm);
+}
+
+.price {
+  margin-top: auto;
+  font-weight: 700;
+}
