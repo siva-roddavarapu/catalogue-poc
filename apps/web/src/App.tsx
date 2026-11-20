@@ -1,0 +1,35 @@
+import { Outlet, Route, Routes } from 'react-router';
+import { Header } from './components/Header/Header';
+import { CategoryPage } from './modules/category/CategoryPage';
+import { EnquiryPage } from './modules/enquiry/EnquiryPage';
+import { HomePage } from './modules/home/HomePage';
+import { NotFoundPage } from './modules/not-found/NotFoundPage';
+import { ProductPage } from './modules/product/ProductPage';
+import { SearchPage } from './modules/search/SearchPage';
+
+function Layout() {
+  return (
+    <>
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+    </>
+  );
+}
+
+/** Every route is declared here by hand. File names never create routes. */
+export function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="category/:slug" element={<CategoryPage />} />
+        <Route path="search" element={<SearchPage />} />
+        <Route path="product/:id" element={<ProductPage />} />
+        <Route path="product/:id/enquire" element={<EnquiryPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  );
+}
