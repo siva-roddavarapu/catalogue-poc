@@ -6,7 +6,7 @@ How AI was used to build this repo, including where it went wrong. Incidents wer
 
 - **Claude Code** (a cloud session) as the pair programmer: it planned, wrote code and tests, and ran the checks, Docker and a headless browser.
 - **GitHub** (via the Claude GitHub App) for the repo, CI runs and the PR.
-- _TODO(human): - **Model:** Claude Opus 5.5 (`claude-opus-5-5`), used through Claude Code.
+- **Model:** Claude Opus 5.5 (`claude-opus-5-5`), used through Claude Code.
 
 ### How we worked
 
